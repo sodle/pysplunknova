@@ -1,0 +1,8 @@
+__title__ = 'splunknova'
+__description__ = 'Python Client for Splunk Project Nova'
+__url__ = 'https://github.com/sodle/pysplunknova'
+__version__ = '1.0.0'
+__author__ = 'Scott Odle'
+__author_email__ = 'scott@sjodle.com'
+__license__ = 'GPL v3'
+__buttercup__ = u'\U0001f40e>'
