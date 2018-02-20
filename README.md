@@ -1,6 +1,8 @@
 # pysplunknova
 Python Client for Splunk Project Nova
 
+Download from [PyPi](https://pypi.python.org/pypi/splunknova)
+
 ## The Client object
 ```python
 from splunknova import Client
