@@ -103,7 +103,7 @@ class EventsClient(object):
         :return: The prepared search object
         :rtype: EventSearch
         """
-        return EventSearch(self.base_url, terms, self.client_id, self.client_secret, earliest, latest)
+        return EventSearch(self._search_url, terms, self.client_id, self.client_secret, earliest, latest)
 
 
 class EventSearch(object):
@@ -158,7 +158,7 @@ class EventSearch(object):
 
     def _encode_transforms(self):
         transforms_str = ' '.join(['eval'] + self.transforms)
-        return urlencode(transforms_str)
+        return transforms_str
 
     def _search(self, index=0, count=10, stats_string=None, timechart_string=None):
         time_string = ''
@@ -166,15 +166,18 @@ class EventSearch(object):
             time_string += 'earliest_time={} '.format(self.earliest)
         if self.latest is not None:
             time_string += 'latest_time={} '.format(self.latest)
-        search = time_string + self.search
-        search_str = urlencode(search)
-        query = 'index={}&count={}&keywords={}'.format(index, count, search_str)
+        search = {
+            'keywords': time_string + self.search,
+            'index': index,
+            'count': count
+        }
         if len(self.transforms) > 0:
-            query += '&transform={}'.format(self._encode_transforms())
+            search['transform'] = self._encode_transforms()
         if stats_string is not None:
-            query += '&' + urlencode('report=stats {}'.format(stats_string))
+            search['report'] = 'stats ' + stats_string
         elif timechart_string is not None:
-            query += '&' + urlencode('report=timechart {}'.format(timechart_string))
+            search['report'] = 'timechart ' + timechart_string
+        query = urlencode(search)
         uri = '{}?{}'.format(self.base_url, query)
         try:
             r = requests.get(uri, auth=(self.client_id, self.client_secret))
@@ -191,7 +194,7 @@ class EventSearch(object):
         :return: List of matching events
         :rtype: list
         """
-        return self._search(index=index, count=count)
+        return self._search(index=index, count=count)['events']
 
     def iter_events(self):
         """Generator equivalent of the `events <EventSearch.events>` function, so that you don't have
@@ -214,7 +217,7 @@ class EventSearch(object):
         :return: dict with stat results
         :rtype: dict
         """
-        return self._search(stats_string=stats_string)
+        return self._search(stats_string=stats_string)['events']
 
     def timechart(self, timechart_string):
         """Aggregate search results on a Splunk timechart command
@@ -223,7 +226,7 @@ class EventSearch(object):
         :return: dict with stat results
         :rtype: dict
         """
-        return self.search(timechart_string=timechart_string)
+        return self._search(timechart_string=timechart_string)['events']
 
 
 class MetricsClient(object):
