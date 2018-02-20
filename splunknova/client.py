@@ -106,8 +106,6 @@ class EventsClient(object):
 
 
 class EventSearch(object):
-    transforms = []
-
     def __init__(self, base_url, search, client_id, client_secret, earliest=None, latest=None):
         """An interface for searching events, inspired by Django's QuerySets.
 
@@ -140,6 +138,7 @@ class EventSearch(object):
         self.latest = latest
         self.client_id = client_id
         self.client_secret = client_secret
+        self.transforms = []
 
     def eval(self, field, transform):
         """Calculate a field from the values of others. Can be chained to eval multiple fields like so:
