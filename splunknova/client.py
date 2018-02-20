@@ -155,8 +155,8 @@ class EventSearch(object):
         return self
 
     def _encode_transforms(self):
-        transforms_str = ' '.join(['eval'] + self.transforms)
-        return transforms_str
+        transforms_str = ', '.join(self.transforms)
+        return 'eval ' + transforms_str
 
     def _search(self, index=0, count=10, stats_string=None, timechart_string=None):
         time_string = ''
