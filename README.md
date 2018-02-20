@@ -43,7 +43,7 @@ c.events.search('source=webserver').timechart('sum(bytes)')
 c.events.search('source=webserver').eval('kb', 'bytes / 1024').stats('sum(kb)')
 
 # Eval statements can be chained, à la Django QuerySets
-c.events.search('source=triangles').eval('perimeter', 'side1 + side2 + side3').eval('longest_side', 'max(side1, side2, side3)')
+c.events.search('source=triangles').eval('perimeter', 'side1 + side2 + side3').eval('longest_side', 'max(side1, side2, side3)').events()
 ```
 
 ## Metrics
