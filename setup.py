@@ -3,7 +3,7 @@
 from distutils.core import setup
 
 setup(name='splunknova',
-      version='1.0.0',
+      version='1.0.1',
       description='Python Client for Splunk Project Nova',
       author='Scott Odle',
       author_email='scott@sjodle.com',
