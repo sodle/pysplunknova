@@ -9,7 +9,6 @@ This module implements the Splunk Nova client
 
 import requests
 from six.moves.urllib.parse import urljoin, urlencode
-from six import iteritems
 
 
 NOVA_BASE_URL = 'https://api.splunknova.com/'
