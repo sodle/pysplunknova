@@ -10,5 +10,9 @@ setup(name='splunknova',
       url='https://github.com/sodle/pysplunknova',
       download_url='https://github.com/sodle/pysplunknova/archive/1.0.3.tar.gz',
       license='GPL v3',
-      packages=['splunknova']
+      packages=['splunknova'],
+      install_requires=[
+            'six',
+            'requests'
+      ]
       )
